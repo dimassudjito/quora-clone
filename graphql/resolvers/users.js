@@ -10,7 +10,7 @@ function generateToken(user) {
     {
       id: user.id,
       email: user.email,
-      username: user.username
+      name: user.name
     },
     SECRET_KEY,
     { expiresIn: '1h' }
@@ -19,9 +19,9 @@ function generateToken(user) {
 
 module.exports = {
   Mutation: {
-    async login(_, { username, password }) {
+    async login(_, { email, password }) {
       // check if user exists
-      const user = await User.findOne({ username })
+      const user = await User.findOne({ email })
       if (!user) {
         throw new UserInputError('User not found')
       }
@@ -37,18 +37,18 @@ module.exports = {
 
       return { ...user._doc, id: user._id, token }
     },
-    async register(_, { registerInput: { username, email, password } }) {
-      // check username availability
-      const user = await User.findOne({ username })
+    async register(_, { registerInput: { name, email, password } }) {
+      // check if email is already used
+      const user = await User.findOne({ email })
       if (user) {
-        throw new UserInputError('Username is taken')
+        throw new UserInputError('Email is already used')
       }
 
       // hash password and get auth token
       password = await bcrypt.hash(password, 12)
       const newUser = new User({
         email,
-        username,
+        name,
         password,
         createdAt: new Date().toISOString()
       })
