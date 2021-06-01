@@ -29,11 +29,11 @@ const questionSchema = new Schema({
       email: String,
       createdAt: String
     }
-  ]
-  // user: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: 'users'
-  // }
+  ],
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'users'
+  }
 })
 
 module.exports = model('Question', questionSchema)
