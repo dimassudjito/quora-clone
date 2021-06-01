@@ -4,6 +4,10 @@ const { UserInputError, addErrorLoggingToSchema } = require('apollo-server')
 
 const { SECRET_KEY } = require('../../config')
 const User = require('../../models/User')
+const {
+  validateRegisterInput,
+  validateLoginInput
+} = require('../../util/validators')
 
 function generateToken(user) {
   return jwt.sign(
@@ -20,6 +24,12 @@ function generateToken(user) {
 module.exports = {
   Mutation: {
     async login(_, { email, password }) {
+      // validate user data
+      const { errors, valid } = validateLoginInput(email, password)
+      if (!valid) {
+        throw new UserInputError('Errors', { errors })
+      }
+
       // check if user exists
       const user = await User.findOne({ email })
       if (!user) {
@@ -38,6 +48,12 @@ module.exports = {
       return { ...user._doc, id: user._id, token }
     },
     async register(_, { registerInput: { name, email, password } }) {
+      // validate user data
+      const { errors, valid } = validateRegisterInput(name, email, password)
+      if (!valid) {
+        throw new UserInputError('Errors', { errors })
+      }
+
       // check if email is already used
       const user = await User.findOne({ email })
       if (user) {
