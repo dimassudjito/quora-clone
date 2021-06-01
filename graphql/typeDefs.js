@@ -5,32 +5,32 @@ module.exports = gql`
     id: ID!
     body: String!
     createdAt: String!
-    username: String!
+    email: String!
     answers: [Answer]!
     answerCount: Int!
-    likes: [Like]!
-    likeCount: Int!
+    upvotes: [Upvote]!
+    upvoteCount: Int!
   }
   type Answer {
     id: ID!
     createdAt: String!
-    username: String!
+    email: String!
     body: String!
     comments: [Comment]!
     commentCount: Int!
-    likes: [Like]!
-    likeCount: Int!
+    upvotes: [Upvote]!
+    upvoteCount: Int!
   }
   type Comment {
     id: ID!
     createdAt: String!
-    username: String!
+    email: String!
     body: String!
   }
-  type Like {
+  type Upvote {
     id: ID!
     createdAt: String!
-    username: String!
+    email: String!
   }
   type User {
     id: ID!
