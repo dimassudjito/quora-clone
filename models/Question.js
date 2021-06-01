@@ -21,10 +21,22 @@ const questionSchema = new Schema({
           email: String,
           createdAt: String
         }
+      ],
+      downvotes: [
+        {
+          email: String,
+          createdAt: String
+        }
       ]
     }
   ],
   upvotes: [
+    {
+      email: String,
+      createdAt: String
+    }
+  ],
+  downvotes: [
     {
       email: String,
       createdAt: String

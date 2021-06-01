@@ -9,6 +9,7 @@ module.exports = gql`
     answers: [Answer]!
     answerCount: Int!
     upvotes: [Upvote]!
+    downvotes: [Downvote]!
     upvoteCount: Int!
   }
   type Answer {
@@ -19,6 +20,7 @@ module.exports = gql`
     comments: [Comment]!
     commentCount: Int!
     upvotes: [Upvote]!
+    downvotes: [Downvote]!
     upvoteCount: Int!
   }
   type Comment {
@@ -28,6 +30,11 @@ module.exports = gql`
     body: String!
   }
   type Upvote {
+    id: ID!
+    createdAt: String!
+    email: String!
+  }
+  type Downvote {
     id: ID!
     createdAt: String!
     email: String!

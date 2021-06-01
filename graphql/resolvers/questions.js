@@ -74,6 +74,45 @@ module.exports = {
             email: user.email,
             createdAt: new Date().toISOString()
           })
+          // also un-downvote if downvoted
+          if (
+            question.downvotes.find((downvote) => downvote.email === user.email)
+          ) {
+            question.downvotes = question.downvotes.filter(
+              (downvote) => downvote.email !== user.email
+            )
+          }
+        }
+        await question.save()
+        return question
+      } else {
+        throw new UserInputError('Question not found')
+      }
+    },
+    async downvoteQuestion(_, { questionId }, context) {
+      const user = auth(context)
+
+      const question = await Question.findById(questionId)
+      if (question) {
+        if (
+          question.downvotes.find((downvote) => downvote.email === user.email)
+        ) {
+          // already downvoted, hence un-downvote
+          question.downvotes = question.downvotes.filter(
+            (downvote) => downvote.email !== user.email
+          )
+        } else {
+          // not yet downvoted, hence downvote
+          question.downvotes.push({
+            email: user.email,
+            createdAt: new Date().toISOString()
+          })
+          // also un-upvote if upvoted
+          if (question.upvotes.find((upvote) => upvote.email === user.email)) {
+            question.upvotes = question.upvotes.filter(
+              (upvote) => upvote.email !== user.email
+            )
+          }
         }
         await question.save()
         return question
