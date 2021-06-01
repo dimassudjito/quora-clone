@@ -28,6 +28,23 @@ module.exports = {
       } else {
         throw new UserInputError('Question not found')
       }
+    },
+    deleteAnswer: async (_, { questionId, answerId }, context) => {
+      const user = auth(context)
+
+      const question = await Question.findById(questionId)
+      if (question) {
+        const answerIndex = question.answers.findIndex((a) => a.id === answerId)
+        if (question.answers[answerIndex].email === user.email) {
+          question.answers.splice(answerIndex, 1)
+          await question.save()
+          return question
+        } else {
+          throw new AuthenticationError('Action not allowed')
+        }
+      } else {
+        throw new UserInputError('Answer not found')
+      }
     }
   }
 }
