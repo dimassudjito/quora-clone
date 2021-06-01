@@ -19,7 +19,7 @@ module.exports = {
         if (question) {
           return question
         } else {
-          throw new Error('Post not found')
+          throw new Error('Question not found')
         }
       } catch (err) {
         throw new Error(err)
@@ -56,6 +56,29 @@ module.exports = {
         }
       } catch (err) {
         throw new Error(err)
+      }
+    },
+    async upvoteQuestion(_, { questionId }, context) {
+      const user = auth(context)
+
+      const question = await Question.findById(questionId)
+      if (question) {
+        if (question.upvotes.find((upvote) => upvote.email === user.email)) {
+          // already upvoted, hence un-upvote
+          question.upvotes = question.upvotes.filter(
+            (upvote) => upvote.email !== user.email
+          )
+        } else {
+          // not yet upvoted, hence upvote
+          question.upvotes.push({
+            email: user.email,
+            createdAt: new Date().toISOString()
+          })
+        }
+        await question.save()
+        return question
+      } else {
+        throw new UserInputError('Question not found')
       }
     }
   }
