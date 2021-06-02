@@ -66,5 +66,7 @@ module.exports = gql`
     downvoteQuestion(questionId: ID!): Question!
     upvoteAnswer(questionId: ID!, answerId: ID!): Question!
     downvoteAnswer(questionId: ID!, answerId: ID!): Question!
+    createComment(questionId: ID!, answerId: ID!, body: String): Question!
+    deleteComment(questionId: ID!, answerId: ID!, commentId: ID!): Question!
   }
 `
