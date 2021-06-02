@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app color="white" flat dense>
+  <v-app-bar app color="white" flat dense class="px-16">
     <v-img class="ml-16" src="@/assets/logo.png" max-width="75"></v-img>
     <v-tabs class="ml-8" color="primary">
       <v-tab v-for="tab in tabs" :key="tab.name" :to="tab.route">
