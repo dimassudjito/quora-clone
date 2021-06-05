@@ -27,6 +27,7 @@ router.beforeEach((to, from, next) => {
   if (data) {
     store.dispatch('login', JSON.parse(data))
   }
+  next()
 })
 
 export default router
