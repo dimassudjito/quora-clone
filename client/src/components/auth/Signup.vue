@@ -7,6 +7,13 @@
       </v-card-text>
       <v-form @submit.prevent="onLogin" class="px-4">
         <v-text-field
+          v-model="name"
+          dense
+          label="Name"
+          outlined
+          color="blue"
+        ></v-text-field>
+        <v-text-field
           v-model="email"
           dense
           label="Email"
@@ -32,13 +39,13 @@
             @click="dialog = false"
             type="submit"
           >
-            Login
+            Sign Up
           </v-btn>
         </v-card-actions>
       </v-form>
     </v-card>
-    <p @click="$emit('signup')" class="white--text text-center ma-0">
-      <small>Sign up with email</small>
+    <p @click="$emit('login')" class="white--text text-center ma-0">
+      <small>Login</small>
     </p>
   </v-dialog>
 </template>
@@ -51,6 +58,7 @@ export default {
   data() {
     return {
       dialog: true,
+      name: '',
       email: '',
       password: ''
     }
@@ -60,8 +68,14 @@ export default {
       this.$apollo
         .mutate({
           mutation: gql`
-            mutation($email: String!, $password: String!) {
-              login(email: $email, password: $password) {
+            mutation($name: String!, $email: String!, $password: String!) {
+              register(
+                registerInput: {
+                  name: $name
+                  email: $email
+                  password: $password
+                }
+              ) {
                 token
                 name
                 email
@@ -69,13 +83,14 @@ export default {
             }
           `,
           variables: {
+            name: this.name,
             email: this.email,
             password: this.password
           }
         })
         .then((data) => {
-          console.log(data.data.login) // DEBUG
-          this.$store.dispatch('login', data.data.login)
+          console.log(data.data.register) // DEBUG
+          this.$store.dispatch('login', data.data.register)
           this.dialog = false
         })
         .catch((err) => {

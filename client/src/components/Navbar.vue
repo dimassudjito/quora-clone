@@ -25,6 +25,12 @@
         ></v-avatar>
       </template>
       <v-list>
+        <v-list-item>
+          <h4>{{ $store.state.user ? $store.state.user.name : '' }}</h4>
+        </v-list-item>
+        <v-list-item class="mt-n6">
+          <small>{{ $store.state.user ? $store.state.user.email : '' }}</small>
+        </v-list-item>
         <v-list-item @click="onLogout">
           <v-list-item-title>Logout</v-list-item-title>
         </v-list-item>
