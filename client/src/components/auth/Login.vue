@@ -15,6 +15,7 @@
         ></v-text-field>
         <v-text-field
           v-model="password"
+          type="password"
           dense
           label="Password"
           outlined
@@ -44,11 +45,9 @@ import gql from 'graphql-tag'
 
 export default {
   name: 'Login',
-  computed: {
-    dialog: () => !localStorage.getItem('user')
-  },
   data() {
     return {
+      dialog: true,
       email: '',
       password: ''
     }
@@ -73,12 +72,16 @@ export default {
         })
         .then((data) => {
           console.log(data.data.login) // DEBUG
-          this.$store.commit('SET_USER', data.data.login)
+          this.$store.dispatch('login', data.data.login)
+          this.dialog = false
         })
         .catch((err) => {
           console.error(err) // DEBUG
         })
     }
+  },
+  created() {
+    this.dialog = !localStorage.getItem('user')
   }
 }
 </script>

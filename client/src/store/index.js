@@ -14,8 +14,19 @@ export default new Vuex.Store({
     SET_USER(state, data) {
       state.user = data
       localStorage.setItem('user', JSON.stringify(data))
+    },
+    CLEAR_USER() {
+      localStorage.removeItem('user')
+      location.reload()
     }
   },
-  actions: {},
+  actions: {
+    login({ commit }, data) {
+      commit('SET_USER', data)
+    },
+    logout({ commit }) {
+      commit('CLEAR_USER')
+    }
+  },
   modules: {}
 })

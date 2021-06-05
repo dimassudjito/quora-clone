@@ -14,7 +14,22 @@
       dense
     ></v-text-field>
 
-    <v-avatar class="mr-16" color="primary" size="25"></v-avatar>
+    <v-menu offset-y>
+      <template v-slot:activator="{ on, attrs }">
+        <v-avatar
+          v-bind="attrs"
+          v-on="on"
+          class="mr-16"
+          color="primary"
+          size="25"
+        ></v-avatar>
+      </template>
+      <v-list>
+        <v-list-item @click="onLogout">
+          <v-list-item-title>Logout</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
   </v-app-bar>
 </template>
 
@@ -28,6 +43,11 @@ export default {
       { name: 'Spaces', icon: 'mdi-account-group-outline', route: '/spaces' },
       { name: 'Notification', icon: 'mdi-bell-outline', route: '/notification' }
     ]
-  })
+  }),
+  methods: {
+    onLogout() {
+      this.$store.dispatch('logout')
+    }
+  }
 }
 </script>
