@@ -1,8 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import gql from 'graphql-tag'
-
-import apollo from '@/vue-apollo'
 
 Vue.use(Vuex)
 

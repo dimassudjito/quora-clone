@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="500" persistent>
+  <div>
     <v-card class="py-2">
       <v-card-text class="text-center">
         By continuing I agree that I am at least 13 years old and agree to
@@ -40,7 +40,7 @@
     <p @click="$emit('signup')" class="white--text text-center ma-0">
       <small>Sign up with email</small>
     </p>
-  </v-dialog>
+  </div>
 </template>
 
 <script>
@@ -50,7 +50,6 @@ export default {
   name: 'Login',
   data() {
     return {
-      dialog: true,
       email: '',
       password: ''
     }
@@ -76,16 +75,12 @@ export default {
         .then((data) => {
           console.log(data.data.login) // DEBUG
           this.$store.dispatch('login', data.data.login)
-          this.dialog = false
+          this.$emit('dialog')
         })
         .catch((err) => {
           console.error(err) // DEBUG
-          this.dialog = true
         })
     }
-  },
-  created() {
-    this.dialog = !localStorage.getItem('user')
   }
 }
 </script>

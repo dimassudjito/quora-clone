@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="500" persistent>
+  <div>
     <v-card class="py-2">
       <v-card-text class="text-center">
         By continuing I agree that I am at least 13 years old and agree to
@@ -47,17 +47,16 @@
     <p @click="$emit('login')" class="white--text text-center ma-0">
       <small>Login</small>
     </p>
-  </v-dialog>
+  </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 
 export default {
-  name: 'Login',
+  name: 'Signup',
   data() {
     return {
-      dialog: true,
       name: '',
       email: '',
       password: ''
@@ -91,16 +90,12 @@ export default {
         .then((data) => {
           console.log(data.data.register) // DEBUG
           this.$store.dispatch('login', data.data.register)
-          this.dialog = false
+          this.$emit('dialog')
         })
         .catch((err) => {
           console.error(err) // DEBUG
-          this.dialog = true
         })
     }
-  },
-  created() {
-    this.dialog = !localStorage.getItem('user')
   }
 }
 </script>

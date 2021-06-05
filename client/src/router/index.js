@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import store from '@/store'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -18,6 +20,13 @@ const routes = [
 
 const router = new VueRouter({
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const data = localStorage.getItem('user')
+  if (data) {
+    store.dispatch('login', JSON.parse(data))
+  }
 })
 
 export default router

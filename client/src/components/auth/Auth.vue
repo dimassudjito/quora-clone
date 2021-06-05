@@ -1,8 +1,16 @@
 <template>
-  <v-container>
-    <Login @signup="active = 'signup'" v-if="active == 'login'" />
-    <Signup @login="active = 'login'" v-else-if="active == 'signup'" />
-  </v-container>
+  <v-dialog v-model="dialog" width="500" persistent>
+    <Login
+      @dialog="dialog = false"
+      @signup="active = 'signup'"
+      v-if="active == 'login'"
+    />
+    <Signup
+      @dialog="dialog = false"
+      @login="active = 'login'"
+      v-else-if="active == 'signup'"
+    />
+  </v-dialog>
 </template>
 
 <script>
@@ -17,8 +25,12 @@ export default {
   },
   data() {
     return {
-      active: 'login'
+      active: 'login',
+      dialog: true
     }
+  },
+  created() {
+    this.dialog = !localStorage.getItem('user')
   }
 }
 </script>
