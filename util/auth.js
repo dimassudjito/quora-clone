@@ -1,9 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { AuthenticationError } = require('apollo-server')
 
-require('dotenv').config()
-// const { SECRET_KEY } = require('../config')
-
 module.exports = (context) => {
   const authHeader = context.req.headers.authorization
   if (authHeader) {
