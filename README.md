@@ -6,5 +6,5 @@ GraphQL. Equipped with a classifier API to detect insincere questions.
 
 [Backend Repo](https://github.com/dimassudjito/quora-clone)  
 [Frontend Repo](https://github.com/dimassudjito/quora-clone-client)  
-[Classifier API](https://github.com/dimassudjito/quora-clone-classifier)  
+[Classifier Repo](https://github.com/dimassudjito/quora-clone-classifier)  
 [Demo](https://quora-clone-client.netlify.app/)
